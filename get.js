@@ -3,7 +3,7 @@ const result = [
   { id: 2, name: 'nick' },
 ];
 function get(req, res) {
-  res.writeHead(200);
+  res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(result));
 }
 

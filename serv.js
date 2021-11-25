@@ -1,6 +1,9 @@
 const http = require('http');
 const { get, result } = require('./get');
 const getId = require('./getId');
+const post = require('./post');
+const put = require('./put');
+const del = require('./del');
 
 const port = 4000;
 
@@ -10,8 +13,14 @@ const server = http.createServer((req, res) => {
     get(req, res);
   } else if (req.url === `/person/${id}` && req.method === 'GET') {
     getId(req, res);
+  } else if (req.url === '/person' && req.method === 'POST') {
+    post(req, res);
+  } else if (req.url === `/person/${id}` && req.method === 'PUT') {
+    put(req, res);
+  } else if (req.url === `/person/${id}` && req.method === 'DELETE') {
+    del(req, res);
   } else {
-    res.writeHead(404);
+    res.writeHead(404, { 'Content-Type': 'application/json' });
     res.end('link is not found');
   }
 });

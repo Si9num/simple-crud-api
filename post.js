@@ -20,9 +20,25 @@ function post(req, res) {
     inputPost = JSON.stringify(inputPost);
   });
   req.on('end', () => {
-    res.end(inputPost);
-
-    result.push(JSON.parse(inputPost));
+    if (
+      !JSON.parse(inputPost).name ||
+      !typeof JSON.parse(inputPost).name === 'string' ||
+      !JSON.parse(inputPost).age ||
+      !typeof JSON.parse(inputPost).name === 'number' ||
+      !JSON.parse(inputPost).hobbies ||
+      !Array.isArray(JSON.parse(inputPost).hobbies) ||
+      JSON.parse(inputPost).hobbies.some((el) => typeof el !== 'string')
+    ) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(
+        JSON.stringify(
+          'request dont have required field or field type is wrong',
+        ),
+      );
+    } else {
+      result.push(JSON.parse(inputPost));
+      res.end(inputPost);
+    }
   });
 }
 module.exports = post;

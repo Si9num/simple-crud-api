@@ -7,18 +7,24 @@ function post(req, res) {
   let inputPost = '';
 
   req.on('data', (chunk) => {
-    inputPost += chunk.toString();
-    inputPost = JSON.parse(inputPost);
+    try {
+      inputPost += chunk.toString();
+      inputPost = JSON.parse(inputPost);
 
-    Object.defineProperty(inputPost, 'id', {
-      value: uuidv4(),
-      writable: false,
+      Object.defineProperty(inputPost, 'id', {
+        value: uuidv4(),
+        writable: false,
 
-      enumerable: true,
-    });
+        enumerable: true,
+      });
 
-    inputPost = JSON.stringify(inputPost);
+      inputPost = JSON.stringify(inputPost);
+    } catch (err) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end('something went wrong');
+    }
   });
+
   req.on('end', () => {
     if (
       !JSON.parse(inputPost).name ||

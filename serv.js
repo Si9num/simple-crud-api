@@ -4,11 +4,13 @@ const getId = require('./getId');
 const post = require('./post');
 const put = require('./put');
 const del = require('./del');
+require('dotenv').config();
 
-const port = 4000;
+const port = process.env.PORT;
 
 const server = http.createServer((req, res) => {
   let id = req.url.split('/')[2];
+
   if (req.url === '/person' && req.method === 'GET') {
     get(req, res);
   } else if (req.url === `/person/${id}` && req.method === 'GET') {

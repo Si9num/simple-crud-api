@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "uuid": "^8.3.2"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0"
   }
 }
